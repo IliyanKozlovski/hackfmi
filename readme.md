@@ -11,3 +11,8 @@ answer Q3:
 9. browser decodes response (e.g. if it's gzipped)
 10. browser determines what to do with response (e.g. is it a HTML page, is it an image, is it a sound clip?)
 11. browser renders response, or offers a download dialog for unrecognized types
+
+https://hackbulgaria.com/
+Server IP: 178.62.181.165:443
+Server responce: 200 OK
+Then my browser fetch all resources and start to render
