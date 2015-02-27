@@ -1,34 +1,41 @@
 class Optional
 
-$arr = []
  def initialize(val)
     @val = val
-    return val
+    @methods = []
+    @arguments = []
  end
 
  def method_missing(m, *args)
- 	$arr << m
-	self
+    @methods.push(m)
+    @arguments.push(args)
+    self
+    
  end
  
  def value
- 	if @val == nil
- 		puts "nil"
- 		puts "Missing methods"
- 		print $arr
- 	end
- 	
-     return @val
+    if @val.nil?
+        return nil
+    end
+
+    for i in 0..@methods.size-1
+        args = @arguments[i]
+        method = @methods[i]
+        puts method
+        @val = @val.public_send(method, *args)
+    end
+    return @val
  end
  
  def to_s
-     @val = @val.to_s
-     return self
+     self.method_missing(:to_s)
  end
 end
 
-#puts Optional.new(nil).no_such_method.fe.value #=> nil
-#p a = Optional.new(14).succ.succ.to_s.value #=> 14
+
+#puts Optional.new(nil).no_such_method.value #=> nil
+#puts a = Optional.new(1).succ.succ.to_s.value
 
 #user = Optional.new(user)
 #p balance = user.account.balance.value #=> nil if user.account is nil
+p Optional.new(42).succ.succ.succ.succ.succ.to_s.value #=> "47"
